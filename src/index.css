@@ -5,7 +5,9 @@
     font-size: 12pt;
     color: black;
   }
-
+  .inputform{
+    flex-basis: 95%;
+  }
   .flex {
     display: flex;
     width: 100%;
@@ -36,6 +38,9 @@
     padding: 5px;
     flex-wrap: wrap;
   }
+  .inputform{
+    flex-basis: 44%;
+  }
   .flex-itm {
     background: #ffffff;
 
@@ -61,6 +66,9 @@
     padding: 5px;
     flex-wrap: wrap;
   }
+  .inputform{
+    flex-basis: 32%;
+  }
   .flex-itm {
     background: #ffffff;
 
@@ -85,6 +93,9 @@
     background: #dbd9d9;
     padding: 5px;
     flex-wrap: wrap;
+  }
+  .inputform{
+    width: 22%;
   }
   .flex-itm {
     background: #ffffff;
@@ -158,4 +169,55 @@
   transform: none;
   -webkit-transition: 200ms ease-in-out;
   transition: 200ms ease-in-out;
+}
+
+
+/* show more button */
+.show_more {
+  text-align: center;
+  margin-left:45%;
+  color: #fff; /* цвет текста */
+  text-decoration: none; /* убирать подчёркивание у ссылок */
+  user-select: none; /* убирать выделение текста */
+  background: rgb(212,75,56); /* фон кнопки */
+  padding: .7em 1.5em; /* отступ от текста */
+  outline: none; /* убирать контур в Mozilla */
+} 
+.show_more:hover { background: rgb(232,95,76); } /* при наведении курсора мышки */
+.show_more:active { background: rgb(152,15,0); } /* при нажатии */
+
+
+/* input form */
+input{
+  margin-bottom: 5px;
+  height: 20px;
+  border: 1px solid #d8d8d8;
+  padding: 3px;
+}
+
+textarea{
+  border: 1px solid #d8d8d8;
+  padding: 3px;
+}
+
+button{
+  padding: 10px;
+  border: 1px solid #d8d8d8;
+  background-color: #f9f9f9;
+  border-radius: 3px;
+  font-weight: 300;
+}
+
+.error{
+  margin-left: 5px;
+  font-size: 13px;
+  color: red;
+  font-weight: 600;
+
+}
+.inputform{
+  margin-top:27%;
+}
+.inputbtn {
+  margin-left: 37%;
 }

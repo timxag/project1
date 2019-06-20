@@ -1,51 +1,63 @@
 import React from 'react';
-import Sortable from 'react-sortablejs';
-import { Draggable, Droppable } from 'react-drag-and-drop'
-import uniqueId from 'lodash/uniqueId';
 
-const API = 'https://jsonplaceholder.typicode.com/photos?albumId=1';
+const API = 'https://jsonplaceholder.typicode.com/photos';
 var count = 20;
 export default class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.handleSubmitElement = this.handleSubmitElement.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    var link = props.link;
-    var text = props.text;
-    var linkIsValid = this.validateLink(link);
-    var textIsValid = this.validateText(text);
-    this.state = { link: link, text: text, linkValid: false, textValid: false };
-
-    this.onLinkChange = this.onLinkChange.bind(this);
-    this.onTextChange = this.onTextChange.bind(this);
+    this.handleValidation = this.handleValidation.bind(this);
     this.state = {
       hit: [
 
       ],
-      datta: [],
-      link: link,
-      text: text,
-      linkIsValid: linkIsValid,
-      textIsValid: textIsValid,
+      fields: {},
+      errors: {}
     };
   }
-  validateLink(link) {
-    return link.length >= 7;
+  handleValidation() {
+    let fields = this.state.fields;
+    let errors = {};
+    let formIsValid = true;
+    if (!fields["text"]) {
+      formIsValid = false;
+      errors["text"] = "Cannot be empty";
+    }
+    if (typeof fields["text"] !== "undefined") {
+      if (!fields["text"].match(/^[a-zA-Zа-яА-Я]+$/)) {
+        formIsValid = false;
+        errors["text"] = "Only letters";
+      }
+    }
+    if (!fields["link"]) {
+      formIsValid = false;
+      errors["link"] = "Cannot be empty";
+    }
+
+    if (typeof fields["link"] !== "undefined") {
+      let lastAtPos = fields["link"].lastIndexOf('/');
+      let lastDotPos = fields["link"].lastIndexOf('.');
+
+      if (!(lastAtPos > 0 && fields["link"].indexOf('///') == -1 && lastDotPos > 2 && (fields["link"].length - lastDotPos) > 2)) {
+        formIsValid = false;
+        errors["link"] = "Link is not valid";
+      }
+    }
+
+
+
+    this.setState({ errors: errors });
+    return formIsValid;
   }
-  validateText(text) {
-    return text.length >= 1;
+
+
+  handleChange(field, e) {
+    let fields = this.state.fields;
+    fields[field] = e.target.value;
+    this.setState({ fields });
   }
-  onLinkChange(e) {
-    var val = e.target.value;
-    var valid = this.validateLink(val);
-    this.setState({ link: val, linkValid: valid });
-  }
-  onTextChange(e) {
-    var val = e.target.value;
-    var valid = this.validateText(val);
-    this.setState({ text: val, textValid: valid });
-  }
+
   handleDeleteElement = id => {
     fetch(API + "/" + id, {
       method: 'DELETE'
@@ -67,11 +79,15 @@ export default class App extends React.Component {
         this.setState({
           hit: [
             ...this.state.hit,
-            ...data.slice(0, count + 10)
+            ...data.slice(count, count + 12)
           ]
         })
       });
-    count += 10;
+
+
+    count += 12;
+    //count += 8 + (count % 4);
+
     /*this.setState({
       hit: [...this.state.hit,this.datta
     })*/
@@ -79,12 +95,10 @@ export default class App extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    if (this.state.textValid === true
-      &&
-      this.state.linkValid === true) {
+    if (this.handleValidation()) {
       const formData = new FormData();
-      formData.append('title', this.state.text);
-      formData.append('url', this.state.link);
+      formData.append('title', this.state.fields["text"]);
+      formData.append('url', this.state.fields["link"]);
       fetch(API, {
         method: 'POST',
         body: formData
@@ -95,8 +109,8 @@ export default class App extends React.Component {
           this.setState({
             hit: [...this.state.hit, {
               id: count,
-              url: this.state.link,
-              title: this.state.text
+              url: this.state.fields["link"],
+              title: this.state.fields["text"]
             }]
           })
         })
@@ -104,51 +118,55 @@ export default class App extends React.Component {
           alert(err);
         });
     }
-    else
-      alert("Validation error!");
   }
   componentWillMount() {
     fetch(API)
       .then(response => response.json())
-      .then(data => this.setState({ hit: data.slice(0, 20) }));
+      .then(data => this.setState({ hit: data.slice(0, 19) }));
 
   }
 
   render() {
     const { hit } = this.state;
-    var linkColor = this.state.linkValid === true ? "green" : "red";
-    var textColor = this.state.textValid === true ? "green" : "red";
+
     return (
-      <div className="flex">
-        <form onSubmit={this.handleSubmit}>
-          <p>
-            <label>LINK:</label><br />
-            <input type="link" ref={this.link}
-              onChange={this.onLinkChange} style={{ borderColor: linkColor }} />
-          </p>
-          <p>
-            <label>TEXT:</label><br />
-            <input type="text" ref={this.text}
-              onChange={this.onTextChange} style={{ borderColor: textColor }} />
-          </p>
-          <input type="submit" value="Отправить" />
-        </form>
-        <form onSubmit={this.handleSubmitElement} >
+      <span>
 
-          <button type="submit" class="submit" >Add</button>
-        </form>
-        <br /><br />
-        {hit.map(hit =>
-          <div key={hit.id} className="flex-itm" >
-            <img src={hit.url} width="100%" />
-            <div key={hit.id} className="close" onClick={() => { this.handleDeleteElement(hit.id) }}>X</div>
-            <div className="dop_info">{hit.title}</div>
+        <div className="flex">
+          <div>
+            <form name="inputform" className="inputform" onSubmit={this.handleSubmit.bind(this)}>
+              <div >
+                <fieldset>
+                  <input refs="link" type="text" size="30" placeholder="link" onChange={this.handleChange.bind(this, "link")} value={this.state.fields["link"]} />
+                  <p className="error">{this.state.errors["link"]}</p>
 
+                  <input ref="text" type="text" size="30" placeholder="title" onChange={this.handleChange.bind(this, "text")} value={this.state.fields["text"]} />
+                  <p className="error">{this.state.errors["text"]}</p>
+
+                  <button class="inputbtn" id="submit" value="Submit">Add</button>
+                </fieldset>
+              </div>
+
+            </form>
           </div>
-        )}
-      </div>
+
+
+
+          {hit.map(hit =>
+            <div key={hit.id} className="flex-itm" >
+              <img src={hit.url} width="100%" />
+              <div key={hit.id} className="close" onClick={() => { this.handleDeleteElement(hit.id) }}>X</div>
+              <div className="dop_info">{hit.title}</div>
+
+            </div>
+          )}
+        </div><form onSubmit={this.handleSubmitElement} >
+
+          <button type="submit" class="show_more" >Show more</button>
+        </form>
+      </span>
+
     );
   }
 
 }
-//
