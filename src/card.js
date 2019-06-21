@@ -6,14 +6,13 @@ export default class Card extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div className="flex-itm" >
+                <img src={this.props.url} width="100%" />
+                <span tabindex="0"><div key={this.props.id} className="close" onClick={this.props.onDelete} >X</div></span>
+                <div className="dop_info">{this.props.title}</div>
+                <img src="https://images.gr-assets.com/hostedimages/1414861120ra/11699799.gif" width="50px" className="preloader" />
+            </div >
 
-                <div key={this.props.id} className="flex-itm" >
-                    <img src={this.props.url} width="100%" />
-                    <div key={this.props.id} className="close" onClick={this.props.onDelete}>X</div>
-                    <div className="dop_info">{this.props.title}</div>
-                </div>
-
-            </div>)
+        )
     }
 }

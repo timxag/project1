@@ -120,13 +120,34 @@
     -webkit-transform: translateY(100%);
     transform: translateY(100%);
     }
-  
+    .preloader{
+      opacity:0;
+      position: absolute;
+      z-index: 1;
+      margin-left:43%;
+      top:40%;
+    }
+    .close.click {
+      border: 10px solid #f3f3f3;
+      border-top: 10px solid #3498db;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      animation: spin 2s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   /* target */
   .flex-itm {
     position: relative;
     overflow: hidden;
   }
-  
+  .inputform {
+    position: relative;
+  }
   .flex-itm {
     margin-bottom: 30px;
   }
@@ -142,8 +163,10 @@
     -webkit-transform: translateY(100%);
     transform: translateY(100%);
   }
-  
-  .dop_info,
+  span:focus ~ .preloader{
+    opacity:1;
+  }
+  .dop_info,.preloader,
   .flex-itm:after,
   .flex-itm.active:after {
     bottom: 0;
