@@ -7,6 +7,7 @@
     }
     .inputform{
       flex-basis: 95%;
+      padding: 15px;
     }
     .flex {
       display: flex;
@@ -40,6 +41,8 @@
     }
     .inputform{
       flex-basis: 44%;
+      margin: 5px;
+      padding: 15px;
     }
     .flex-itm {
       background: #ffffff;
@@ -68,6 +71,8 @@
     }
     .inputform{
       flex-basis: 32%;
+      margin: 5px;
+      padding: 15px;
     }
     .flex-itm {
       background: #ffffff;
@@ -95,12 +100,14 @@
       flex-wrap: wrap;
     }
     .inputform{
-      width: 22%;
+      flex-basis: 22%;
+    }
+    .fieldset {
+      margin-top: px;
     }
     .flex-itm {
       background: #ffffff;
-  
-      flex: 0 0; /* or 1 0 100px, and no more need in min-width at all */
+      flex: 0.5 0.5; /* or 1 0 100px, and no more need in min-width at all */
       flex-basis: 22%;
       margin: 5px;
       padding: 15px;
@@ -238,9 +245,151 @@
     font-weight: 600;
   
   }
+  .gray{
+    background-color: #eee;
+  }
   .inputform{
-    margin-top:27%;
+    margin-top:5%;  
   }
   .inputbtn {
-    margin-left: 37%;
+    text-align: center;
+    margin-left:37%;
+    padding : 5px 5px 5px 5px;
+    color: #fff; /* цвет текста */
+    text-decoration: none; /* убирать подчёркивание у ссылок */
+    user-select: none; /* убирать выделение текста */
+    background: rgb(212,75,56); /* фон кнопки */
+    padding: .7em 1.5em; /* отступ от текста */
+    outline: none; /* убирать контур в Mozilla */
+  } 
+  .inputbtn:hover { background: rgb(232,95,76); } /* при наведении курсора мышки */
+  .inputbtn:active { background: rgb(152,15,0); } /* при нажатии */
+  
+  /*test new input */
+  form {
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  form > div {
+    position: relative;
+    background: white;
+    border-bottom: 1px solid #ccc;
+  }
+  form > div > label {
+    opacity: 0.3;
+    font-weight: bold;
+    position: absolute;
+    top: 22px;
+    left: 20px;
+  }
+  form > div > input[type="link"] {
+    width: 100%;
+    border: 0;
+    padding: 20px 20px 20px 45px;
+    background: #eee;
+  }
+  form > div > input[type="link"]:focus {
+    outline: 0;
+    background: #eee;
+  }
+  form > div > input[type="link"]:focus + label {
+    opacity: 0;
+  }
+  form > div > input[type="link"]:valid {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 20px 20px;
+  }
+  form > div > input[type="link"]:valid + label {
+    opacity: 0;
+  }
+  form > div > input[type="link"]:invalid:not(:focus):not(:placeholder-shown) {
+    background: pink;
+  }
+  form > div > input[type="link"]:invalid:not(:focus):not(:placeholder-shown) + label {
+    opacity: 0;
+  }
+  form > div > input[type="link"]:invalid:focus:not(:placeholder-shown) ~ .requirements {
+    max-height: 200px;
+    padding: 0 30px 20px 50px;
+  }
+  form > div .requirements {
+    padding: 0 30px 0 50px;
+    color: #999;
+    max-height: 0;
+    transition: 0.28s;
+    overflow: hidden;
+    color: red;
+    font-style: italic;
+  }
+  form input[type="submit"] {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+    background: #41d873;
+    color: white;
+    border: 0;
+    padding: 20px;
+    font-size: 1.2rem;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  form {
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  form > div {
+    position: relative;
+    background: #eee;
+    border-bottom: 1px solid #ccc;
+  }
+  form > div > label {
+    opacity: 0.3;
+    font-weight: bold;
+    position: absolute;
+    top: 22px;
+    left: 20px;
+  }
+  form > div > input[type="text"] {
+    width: 100%;
+    border: 0;
+    padding: 20px 20px 20px 45px;
+    background: #eee;
+  }
+  form > div > input[type="text"]:focus {
+    outline: 0;
+    background: #eee;
+  }
+  form > div > input[type="text"]:focus + label {
+    opacity: 0;
+  }
+  form > div > input[type="text"]:valid {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 20px 20px;
+  }
+  form > div > input[type="text"]:valid + label {
+    opacity: 0;
+  }
+  form > div > input[type="text"]:invalid:not(:focus):not(:placeholder-shown) {
+    background: pink;
+  }
+  form > div > input[type="text"]:invalid:not(:focus):not(:placeholder-shown) + label {
+    opacity: 0;
+  }
+  form > div > input[type="text"]:invalid:focus:not(:placeholder-shown) ~ .requirements2 {
+    max-height: 200px;
+    padding: 0 30px 20px 50px;
+  }
+  form > div .requirements2 {
+    padding: 0 30px 0 50px;
+    color: #999;
+    max-height: 0;
+    transition: 0.28s;
+    overflow: hidden;
+    color: red;
+    font-style: italic;
   }

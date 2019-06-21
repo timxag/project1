@@ -37,9 +37,6 @@ export default class Form extends React.Component {
                 errors["link"] = "Link is not valid";
             }
         }
-
-
-
         this.setState({ errors: errors });
         return formIsValid;
     }
@@ -56,36 +53,41 @@ export default class Form extends React.Component {
     }
     render() {
         return (
-            <div className="flex">
-                <div>
-                    <form name="inputform" className="inputform" onSubmit={this.handleSubmit.bind(this)}>
-                        <div >
-                            <fieldset>
-                                <input
-                                    refs="link"
-                                    type="link"
-                                    size="30"
-                                    placeholder="link"
-                                    onChange={this.handleChange.bind(this, "link")}
-                                    value={this.state.fields["link"]} />
-                                <p className="error">{this.state.errors["link"]}</p>
+            <form name="inputform" className="inputform" onSubmit={this.handleSubmit.bind(this)}>
+                <div className="gray">
 
-                                <input
-                                    ref="text"
-                                    type="text"
-                                    size="30"
-                                    placeholder="title"
-                                    onChange={this.handleChange.bind(this, "text")}
-                                    value={this.state.fields["text"]} />
-                                <p className="error">{this.state.errors["text"]}</p>
+                    <input
+                        refs="link"
+                        type="link"
+                        size="30"
+                        id="link"
+                        autocomplete="off"
+                        required placeholder=" " pattern=".{7,}"
+                        placeholder="Enter valid image URL"
+                        onChange={this.handleChange.bind(this, "link")}
+                        value={this.state.fields["link"]} />
+                    <div class="requirements">
+                        Must contain 'http://'
+                         </div>
 
-                                <button class="inputbtn" id="submit" value="Submit">Add</button>
-                            </fieldset>
-                        </div>
+                    <input
+                        ref="text"
+                        type="text"
+                        autocomplete="off"
+                        size="30"
+                        required placeholder=" " pattern=".{3,}"
+                        //onBlur={this.costyl()}
+                        placeholder="Enter description for image"
+                        onChange={this.handleChange.bind(this, "text")}
+                        value={this.state.fields["text"]} />
+                    <div class="requirements2">
+                        Must contain at least 3 symbols
+                    </div>
 
-                    </form>
+                    <button class="inputbtn" id="submit" value="Submit">Add</button>
+
                 </div>
-            </div>
+            </form >
         )
     }
 }

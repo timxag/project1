@@ -80,11 +80,11 @@ export default class App extends React.Component {
     const { hit } = this.state;
 
     return (
-      <><Form
-        onSubmit={this.handleSubmit}
-      />
+      <>
         <div className="flex">
-
+          <Form
+            onSubmit={this.handleSubmit}
+          />
           {
             hit.map(hit =>
               (<Card
@@ -96,10 +96,7 @@ export default class App extends React.Component {
           }
 
         </div>
-        <form onSubmit={this.handleSubmitElement} >
-
-          <button type="submit" className="show_more" >Show more</button>
-        </form>
+        <button type="submit" className="show_more" onClick={this.handleSubmitElement} >Show more</button>
       </>
     );
   }
