@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './card'
-
+import InfiniteScroll from "react-infinite-scroll-component";
 import Form from './form'
 const API = 'https://jsonplaceholder.typicode.com/photos';
 var count = 19;
@@ -33,18 +33,18 @@ export default class App extends React.Component {
 
   };/* */
   handleSubmitElement(e) {
-    e.preventDefault();
+    // e.preventDefault();
     fetch(API)
       .then(response => response.json())
       .then(data => {
         this.setState({
           hit: [
             ...this.state.hit,
-            ...data.slice(count, count + 12)
+            ...data.slice(count, count + 4)
           ]
         })
       });
-    count += 12;
+    count += 4;
   }
   componentWillMount() {
     fetch(API)
@@ -81,21 +81,30 @@ export default class App extends React.Component {
 
     return (
       <>
-        <div className="flex">
-          <Form
-            onSubmit={this.handleSubmit}
-          />
-          {
-            hit.map(hit =>
-              (<Card
-                key={hit.id}
-                id={hit.id}
-                url={hit.url}
-                title={hit.title}
-                onDelete={() => { this.handleDeleteElement(hit.id) }} />))
-          }
+        <InfiniteScroll
+          dataLength={count - 8}
+          next={this.handleSubmitElement}
+          hasMore={true}
+          scrollableTarget="scrollableDiv"
 
-        </div>
+          loader={<img src="https://images.gr-assets.com/hostedimages/1414861120ra/11699799.gif" width="50px" className="preloader" />}
+        >
+          <div className="flex">
+            <Form
+              onSubmit={this.handleSubmit}
+            />
+            {
+              hit.map(hit =>
+                (<Card
+                  key={hit.id}
+                  id={hit.id}
+                  url={hit.url}
+                  title={hit.title}
+                  onDelete={() => { this.handleDeleteElement(hit.id) }} />))
+            }
+
+          </div>
+        </InfiniteScroll>
         <button type="submit" className="show_more" onClick={this.handleSubmitElement} >Show more</button>
       </>
     );
