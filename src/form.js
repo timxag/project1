@@ -52,6 +52,8 @@ export default class Form extends React.Component {
         }
     }
     render() {
+        const hit = this.props.arr;
+        console.log(hit);
         return (
             <form name="inputform" className="inputform" onSubmit={this.handleSubmit.bind(this)}>
                 <div className="gray">
@@ -62,12 +64,12 @@ export default class Form extends React.Component {
                         size="30"
                         id="link"
                         autocomplete="off"
-                        required placeholder=" " pattern=".{7,}"
+                        required placeholder=" " pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$" required
                         placeholder="Enter valid image URL"
                         onChange={this.handleChange.bind(this, "link")}
                         value={this.state.fields["link"]} />
                     <div class="requirements">
-                        Must contain 'http://'
+                        Invalid URL
                          </div>
 
                     <input
@@ -83,10 +85,16 @@ export default class Form extends React.Component {
                     <div class="requirements2">
                         Must contain at least 3 symbols
                     </div>
-
                     <button class="inputbtn" id="submit" value="Submit">Add</button>
 
                 </div>
+                <datalist id="cc">
+                    {hit.map(
+                        arr => (
+                            <option value={arr}></option>
+                        )
+                    )}
+                </datalist>
             </form >
         )
     }

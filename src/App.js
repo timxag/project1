@@ -2,8 +2,11 @@ import React from 'react';
 import Card from './card'
 import InfiniteScroll from "react-infinite-scroll-component";
 import Form from './form'
+import throttle from 'lodash'
+import _ from 'lodash';
 const API = 'https://jsonplaceholder.typicode.com/photos';
 var count = 19;
+
 export default class App extends React.Component {
 
   constructor(props) {
@@ -12,6 +15,7 @@ export default class App extends React.Component {
     //this.handleValidation = this.handleValidation.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDeleteElement = this.handleDeleteElement.bind(this);
+    this.onScroll = _.throttle(this.handleSubmitElement, 200);
     this.state = {
       hit: [
 
@@ -19,6 +23,7 @@ export default class App extends React.Component {
 
     };
   }
+
   handleDeleteElement = id => {
     fetch(API + "/" + id, {
       method: 'DELETE'
@@ -32,7 +37,7 @@ export default class App extends React.Component {
     });
 
   };/* */
-  handleSubmitElement(e) {
+  handleSubmitElement() {
     // e.preventDefault();
     fetch(API)
       .then(response => response.json())
@@ -45,11 +50,12 @@ export default class App extends React.Component {
         })
       });
     count += 4;
+    console.log(count);
   }
   componentWillMount() {
     fetch(API)
       .then(response => response.json())
-      .then(data => this.setState({ hit: data.slice(0, 19) }));
+      .then(data => this.setState({ hit: data.slice(0, 19) }))
 
   }
   handleSubmit(url, text) {
@@ -78,21 +84,25 @@ export default class App extends React.Component {
   }
   render() {
     const { hit } = this.state;
+    let titles = [];
 
     return (
       <>
-        <InfiniteScroll
-          dataLength={count - 8}
-          next={this.handleSubmitElement}
-          hasMore={true}
-          scrollableTarget="scrollableDiv"
 
+        <InfiniteScroll
+          dataLength={count}
+          next={this.onScroll}
+          hasMore={count < 5300 ? true : false}
+          scrollableTarget="scrollableDiv"
           loader={<img src="https://images.gr-assets.com/hostedimages/1414861120ra/11699799.gif" width="50px" className="preloader" />}
         >
+
           <div className="flex">
             <Form
               onSubmit={this.handleSubmit}
+              arr={titles}
             />
+
             {
               hit.map(hit =>
                 (<Card
