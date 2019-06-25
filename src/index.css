@@ -191,8 +191,9 @@
 .show_more:hover { background: rgb(232,95,76); } /* при наведении курсора мышки */
 .show_more:active { background: rgb(152,15,0); } /* при нажатии */
 
+.img { pointer-events: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none;}
 
-/* input form */
+/* input form 
 input{
   margin-bottom: 5px;
   height: 20px;
@@ -225,3 +226,4 @@ button{
 }
 
 
+*/

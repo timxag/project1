@@ -2,11 +2,10 @@ import React from 'react';
 import Card from './card'
 import InfiniteScroll from "react-infinite-scroll-component";
 import Form from './form'
-import throttle from 'lodash'
 import _ from 'lodash';
 const API = 'https://jsonplaceholder.typicode.com/photos';
 var count = 19;
-
+var titles = [];
 export default class App extends React.Component {
 
   constructor(props) {
@@ -15,7 +14,7 @@ export default class App extends React.Component {
     //this.handleValidation = this.handleValidation.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDeleteElement = this.handleDeleteElement.bind(this);
-    this.onScroll = _.throttle(this.handleSubmitElement, 200);
+    this.onScroll = _.throttle(this.handleSubmitElement, 450);
     this.state = {
       hit: [
 
@@ -47,7 +46,8 @@ export default class App extends React.Component {
             ...this.state.hit,
             ...data.slice(count, count + 4)
           ]
-        })
+        });
+
       });
     count += 4;
     console.log(count);
@@ -55,7 +55,14 @@ export default class App extends React.Component {
   componentWillMount() {
     fetch(API)
       .then(response => response.json())
-      .then(data => this.setState({ hit: data.slice(0, 19) }))
+      .then(data => this.setState({ hit: data.slice(0, 19) }));
+    const { hit } = this.state;
+    hit.map(function () {
+      titles = [...titles, hit.url]
+    })
+    console.log("arr in fetch", titles);
+    console.log("hit in fetch", hit);
+
 
   }
   handleSubmit(url, text) {
@@ -84,8 +91,12 @@ export default class App extends React.Component {
   }
   render() {
     const { hit } = this.state;
-    let titles = [];
-
+    for (var key in hit) {
+      titles[key] = hit[key].url
+    }
+    titles = titles.slice(0, 10);
+    console.log("arr in render", titles);
+    console.log("hit in render", hit);
     return (
       <>
 
@@ -94,13 +105,13 @@ export default class App extends React.Component {
           next={this.onScroll}
           hasMore={count < 5300 ? true : false}
           scrollableTarget="scrollableDiv"
+          scrollThreshold="80%"
           loader={<img src="https://images.gr-assets.com/hostedimages/1414861120ra/11699799.gif" width="50px" className="preloader" />}
         >
 
           <div className="flex">
             <Form
-              onSubmit={this.handleSubmit}
-              arr={titles}
+              arr={titles} onSubmit={this.handleSubmit}
             />
 
             {

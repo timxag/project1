@@ -1,101 +1,109 @@
 import React from 'react';
 import './index.css'
+import { FormErrors } from './FormErrors'
+var linkColor;
+var titleColor;
 export default class Form extends React.Component {
     constructor(props) {
         super(props);
-        this.handleValidation = this.handleValidation.bind(this);
         this.state = {
-            fields: {},
-            errors: {},
+            link: '',
+            title: '',
+            formErrors: { link: '', title: '' },
+            linkValid: false,
+            titleValid: false,
+            formValid: false,
+
         }
     }
-    handleValidation() {
-        let fields = this.state.fields;
-        let errors = {};
-        let formIsValid = true;
-        if (!fields["text"]) {
-            formIsValid = false;
-            errors["text"] = "Cannot be empty";
-        }
-        if (typeof fields["text"] !== "undefined") {
-            if (!fields["text"].match(/^[a-zA-Zа-яА-Я0-9]+$/)) {
-                formIsValid = false;
-                errors["text"] = "Only letters and numbers";
-            }
-        }
-        if (!fields["link"]) {
-            formIsValid = false;
-            errors["link"] = "Cannot be empty";
-        }
 
-        if (typeof fields["link"] !== "undefined") {
-            let lastAtPos = fields["link"].lastIndexOf('/');
-            let lastDotPos = fields["link"].lastIndexOf('.');
+    handleUserInput = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({ [name]: value },
+            () => { this.validateField(name, value) });
 
-            if (!(lastAtPos > 0 && fields["link"].indexOf('///') == -1 && lastDotPos > 2 && (fields["link"].length - lastDotPos) > 2)) {
-                formIsValid = false;
-                errors["link"] = "Link is not valid";
-            }
-        }
-        this.setState({ errors: errors });
-        return formIsValid;
     }
-    handleChange(field, e) {
-        let fields = this.state.fields;
-        fields[field] = e.target.value;
-        this.setState({ fields });
+
+    validateField(fieldName, value) {
+        let fieldValidationErrors = this.state.formErrors;
+        let linkValid = this.state.linkValid;
+        let titleValid = this.state.titleValid;
+        switch (fieldName) {
+            case 'link':
+                linkValid = value.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/i);
+                fieldValidationErrors.link = linkValid ? '' : ' is invalid';
+                linkColor = linkValid ? "green" : "red"
+
+                break;
+            case 'title':
+                titleValid = value.length >= 3;
+                fieldValidationErrors.title = titleValid ? '' : ' is too short';
+                titleColor = titleValid ? "green" : "red"
+
+                break;
+            default:
+                break;
+        }
+        console.log(linkValid);
+
+        this.setState({
+            formErrors: fieldValidationErrors,
+            linkValid: linkValid,
+            titleValid: titleValid,
+        }, this.validateForm);
+
+    }
+    validateForm() {
+        this.setState({
+            formValid: this.state.linkValid &&
+                this.state.titleValid
+        });
+    }
+    errorClass(error) {
+        return (error.length === 0 ? '' : 'has-error');
     }
     handleSubmit(e) {
         e.preventDefault();
-        if (this.handleValidation()) {
-            this.props.onSubmit(this.state.fields["link"], this.state.fields["text"])
+        {
+            this.props.onSubmit(this.state.link, this.state.title)
         }
     }
     render() {
-        const hit = this.props.arr;
-        console.log(hit);
+
         return (
-            <form name="inputform" className="inputform" onSubmit={this.handleSubmit.bind(this)}>
-                <div className="gray">
-
-                    <input
-                        refs="link"
-                        type="link"
-                        size="30"
-                        id="link"
-                        autocomplete="off"
-                        required placeholder=" " pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$" required
-                        placeholder="Enter valid image URL"
-                        onChange={this.handleChange.bind(this, "link")}
-                        value={this.state.fields["link"]} />
-                    <div class="requirements">
-                        Invalid URL
-                         </div>
-
-                    <input
-                        ref="text"
-                        type="text"
-                        autocomplete="off"
-                        size="30"
-                        required placeholder=" " pattern=".{3,}"
-                        //onBlur={this.costyl()}
-                        placeholder="Enter description for image"
-                        onChange={this.handleChange.bind(this, "text")}
-                        value={this.state.fields["text"]} />
-                    <div class="requirements2">
-                        Must contain at least 3 symbols
-                    </div>
-                    <button class="inputbtn" id="submit" value="Submit">Add</button>
+            <form className="inputform" onSubmit={this.handleSubmit.bind(this)} >
+                <div className="requirements">
+                    <FormErrors formErrors={this.state.formErrors} />
 
                 </div>
+                <div className={
+                    `form-group
+                    ${this.errorClass(this.state.formErrors.title)}`
+                }>
+                    <label htmlFor="link">Image URL</label>
+                    <input type="link" className="form-control" autocomplete="off" list="cc"
+                        style={{ borderColor: linkColor }}
+                        name="link" value={this.state.link} onChange={this.handleUserInput} />
+                </div>
+                <br></br>
+                <div className={`form-group
+                 ${this.errorClass(this.state.formErrors.title)}`}>
+                    <label htmlFor="title">Description</label>
+                    <input type="title" className="form-control" autocomplete="off"
+                        style={{ borderColor: titleColor }}
+                        name="title" value={this.state.title} onChange={this.handleUserInput} />
+                </div>
+                <button type="submit" className="btn btn-primary"
+                    disabled={!this.state.formValid}>Add</button>
                 <datalist id="cc">
-                    {hit.map(
+                    {this.props.arr.map(
                         arr => (
                             <option value={arr}></option>
                         )
                     )}
                 </datalist>
-            </form >
+            </ form >
         )
     }
 }
