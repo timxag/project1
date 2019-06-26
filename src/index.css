@@ -1,12 +1,12 @@
 /* media query */
-@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700);
+@import url(https://fonts.googleapis.com/css?family=PT+Sans:400, 700);
 @media screen and (min-width: 315px) {
   body {
     margin: 0;
     font-size: 12pt;
     color: black;
   }
-  
+
   .flex {
     display: flex;
     width: 100%;
@@ -37,7 +37,7 @@
     padding: 5px;
     flex-wrap: wrap;
   }
-  
+
   .flex-itm {
     background: #ffffff;
 
@@ -63,7 +63,7 @@
     padding: 5px;
     flex-wrap: wrap;
   }
-  
+
   .flex-itm {
     background: #ffffff;
 
@@ -106,26 +106,30 @@
   top: 32px;
   width: 32px;
   height: 32px;
-  z-index: 1;
+  z-index: 50;
   color: red;
   font-size: 20pt;
   opacity: 0;
   -webkit-transform: translateY(100%);
   transform: translateY(100%);
+}
+.close.click {
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #3498db;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  .close.click {
-    border: 10px solid #f3f3f3;
-    border-top: 10px solid #3498db;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    animation: spin 2s linear infinite;
+  100% {
+    transform: rotate(360deg);
   }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+}
 /* target */
 .flex-itm {
   position: relative;
@@ -154,7 +158,7 @@
   bottom: 0;
   right: 0;
   left: 0;
-  position: absolute;
+  z-index: 2;
 }
 
 .flex-itm:hover:after,
@@ -176,22 +180,31 @@
   transition: 200ms ease-in-out;
 }
 
-
 /* show more button */
 .show_more {
   text-align: center;
-  margin-left:45%;
+  margin-left: 45%;
   color: #fff; /* цвет текста */
   text-decoration: none; /* убирать подчёркивание у ссылок */
   user-select: none; /* убирать выделение текста */
-  background: rgb(212,75,56); /* фон кнопки */
-  padding: .7em 1.5em; /* отступ от текста */
+  background: rgb(212, 75, 56); /* фон кнопки */
+  padding: 0.7em 1.5em; /* отступ от текста */
   outline: none; /* убирать контур в Mozilla */
-} 
-.show_more:hover { background: rgb(232,95,76); } /* при наведении курсора мышки */
-.show_more:active { background: rgb(152,15,0); } /* при нажатии */
+}
+.show_more:hover {
+  background: rgb(232, 95, 76);
+} /* при наведении курсора мышки */
+.show_more:active {
+  background: rgb(152, 15, 0);
+} /* при нажатии */
 
-.img { pointer-events: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none;}
+.img {
+  pointer-events: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
 /* input form 
 input{
@@ -227,3 +240,20 @@ button{
 
 
 */
+.dropdown1 {
+  top: 20%;
+  display: block;
+  background: white;
+  position: absolute;
+}
+
+.dropdown_hid {
+  top: 20%;
+  display: none;
+  background: white;
+  position: absolute;
+}
+li {
+  list-style-type: none;
+  margin-left: -30px;
+}

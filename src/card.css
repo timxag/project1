@@ -1,274 +1,293 @@
 /* media query */
 @media screen and (min-width: 315px) {
-    body {
-      margin: 0;
-      font-size: 12pt;
-      color: black;
-    }
-    .inputform{
-      flex-basis: 95%;
-      padding: 15px;
-    }
-    .flex {
-      display: flex;
-      width: 100%;
-      background: #dbd9d9;
-      flex-wrap: wrap;
-    }
-    .flex-itm {
-      background: #ffffff;
-  
-      flex: 0 0.5; /* or 1 0 100px, and no more need in min-width at all */
-      flex-basis: 95%;
-      padding: 15px;
-    }
-  }
-  @media screen and (min-width: 677px) {
-    body {
-      margin: 0;
-      font-size: 12pt;
-      color: black;
-    }
-    .img {
-      width: 100%;
-    }
-    .flex {
-      display: flex;
-  
-      background: #dbd9d9;
-      padding: 5px;
-      flex-wrap: wrap;
-    }
-    .inputform{
-      flex-basis: 44%;
-      margin: 5px;
-      padding: 15px;
-    }
-    .flex-itm {
-      background: #ffffff;
-  
-      flex: 0 0.5; /* or 1 0 100px, and no more need in min-width at all */
-      flex-basis: 44%;
-      margin: 5px;
-      padding: 15px;
-    }
-  }
-  @media screen and (min-width: 800px) {
-    body {
-      margin: 0;
-      font-size: 12pt;
-      color: black;
-    }
-    .img {
-      width: 100%;
-    }
-    .flex {
-      display: flex;
-  
-      background: #dbd9d9;
-      padding: 5px;
-      flex-wrap: wrap;
-    }
-    .inputform{
-      flex-basis: 32%;
-      margin: 5px;
-      padding: 15px;
-    }
-    .flex-itm {
-      background: #ffffff;
-  
-      flex: 0 0.5; /* or 1 0 100px, and no more need in min-width at all */
-      flex-basis: 32%;
-      margin: 5px;
-      padding: 15px;
-    }
-  }
-  @media screen and (min-width: 1070px) {
-    body {
-      margin: 0;
-      font-size: 12pt;
-      color: black;
-    }
-    .img {
-      width: 100%;
-    }
-    .flex {
-      display: flex;
-  
-      background: #dbd9d9;
-      padding: 5px;
-      flex-wrap: wrap;
-    }
-    .inputform{
-      flex-basis: 22%;
-    }
-    .fieldset {
-      margin-top: px;
-    }
-    .flex-itm {
-      background: #ffffff;
-      flex: 0.5 0.5; /* or 1 0 100px, and no more need in min-width at all */
-      flex-basis: 22%;
-      margin: 5px;
-      padding: 15px;
-    }
-  }
-  .img { pointer-events: none; 
-    -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none;}
-
-  /* крестик */
-  .close {
-    position: absolute;
-    right: 32px;
-    top: 32px;
-    width: 32px;
-    height: 32px;
-    z-index: 1;
-    color: red;
-    font-size: 20pt;
-    opacity: 0;
-    -webkit-transform: translateY(100%);
-    transform: translateY(100%);
-    }
-    .preloader{
-      opacity:0;
-      position: absolute;
-      z-index: 1;
-      margin-left:43%;
-      top:40%;
-    }
-    .close.click {
-      border: 10px solid #f3f3f3;
-      border-top: 10px solid #3498db;
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
-      animation: spin 2s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  /* target */
-  .flex-itm {
-    position: relative;
-    overflow: hidden;
+  body {
+    margin: 0;
+    font-size: 12pt;
+    color: black;
   }
   .inputform {
-    position: relative;
+    flex-basis: 95%;
+    padding: 15px;
+  }
+  .flex {
+    display: flex;
+    width: 100%;
+    background: #dbd9d9;
+    flex-wrap: wrap;
   }
   .flex-itm {
-    margin-bottom: 30px;
+    background: #ffffff;
+
+    flex: 0 0.5; /* or 1 0 100px, and no more need in min-width at all */
+    flex-basis: 95%;
+    padding: 15px;
   }
-  
-  .dop_info {
-    z-index: 1;
-    color: #fff;
-    padding: 10px 15px;
-    font-size: 13pt;
-    line-height: 18px;
-    background: rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    -webkit-transform: translateY(100%);
-    transform: translateY(100%);
+}
+@media screen and (min-width: 677px) {
+  body {
+    margin: 0;
+    font-size: 12pt;
+    color: black;
   }
-  span:focus ~ .preloader{
-    opacity:1;
+  .img {
+    width: 100%;
   }
-  .dop_info,.preloader,
-  .flex-itm:after,
-  .flex-itm.active:after {
-    bottom: 0;
-    right: 0;
-    left: 0;
-    position: absolute;
+  .flex {
+    display: flex;
+
+    background: #dbd9d9;
+    padding: 5px;
+    flex-wrap: wrap;
   }
-  
-  .flex-itm:hover:after,
-  .flex-itm.active:after {
-    content: " ";
-    top: 0;
-    background: #000;
-    opacity: 0.6;
+  .inputform {
+    flex-basis: 44%;
+    margin: 5px;
+    padding: 15px;
   }
-  
-  .flex-itm:hover .dop_info,
-  .flex-itm.active .dop_info,
-  .flex-itm.active .close,
-  .flex-itm:hover .close {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-    -webkit-transition: 200ms ease-in-out;
-    transition: 200ms ease-in-out;
+  .flex-itm {
+    background: #ffffff;
+
+    flex: 0 0.5; /* or 1 0 100px, and no more need in min-width at all */
+    flex-basis: 44%;
+    margin: 5px;
+    padding: 15px;
   }
-  
-  
-  /* show more button */
-  .show_more {
-    text-align: center;
-    margin-left:45%;
-    color: #fff; /* цвет текста */
-    text-decoration: none; /* убирать подчёркивание у ссылок */
-    user-select: none; /* убирать выделение текста */
-    background: rgb(212,75,56); /* фон кнопки */
-    padding: .7em 1.5em; /* отступ от текста */
-    outline: none; /* убирать контур в Mozilla */
-  } 
-  .show_more:hover { background: rgb(232,95,76); } /* при наведении курсора мышки */
-  .show_more:active { background: rgb(152,15,0); } /* при нажатии */
-  
-  
-  /* input form */
-  input{
-    margin-bottom: 5px;
-    height: 20px;
-    border: 1px solid #d8d8d8;
-    padding: 3px;
+}
+@media screen and (min-width: 800px) {
+  body {
+    margin: 0;
+    font-size: 12pt;
+    color: black;
   }
-  
-  textarea{
-    border: 1px solid #d8d8d8;
-    padding: 3px;
+  .img {
+    width: 100%;
   }
-  
-  button{
-    padding: 10px;
-    border: 1px solid #d8d8d8;
-    background-color: #f9f9f9;
-    border-radius: 3px;
-    font-weight: 300;
+  .flex {
+    display: flex;
+
+    background: #dbd9d9;
+    padding: 5px;
+    flex-wrap: wrap;
   }
-  
-  .error{
-    margin-left: 5px;
-    font-size: 13px;
-    color: red;
-    font-weight: 600;
-  
+  .inputform {
+    flex-basis: 32%;
+    margin: 5px;
+    padding: 15px;
   }
-  .gray{
-    background-color: #eee;
+  .flex-itm {
+    background: #ffffff;
+
+    flex: 0 0.5; /* or 1 0 100px, and no more need in min-width at all */
+    flex-basis: 32%;
+    margin: 5px;
+    padding: 15px;
   }
-  .inputform{
-    margin-top:5%;  
+}
+@media screen and (min-width: 1070px) {
+  body {
+    margin: 0;
+    font-size: 12pt;
+    color: black;
   }
-  .inputbtn {
-    text-align: center;
-    margin-left:37%;
-    padding : 5px 5px 5px 5px;
-    color: #fff; /* цвет текста */
-    text-decoration: none; /* убирать подчёркивание у ссылок */
-    user-select: none; /* убирать выделение текста */
-    background: rgb(212,75,56); /* фон кнопки */
-    padding: .7em 1.5em; /* отступ от текста */
-    outline: none; /* убирать контур в Mozilla */
-  } 
-  .inputbtn:hover { background: rgb(232,95,76); } /* при наведении курсора мышки */
-  .inputbtn:active { background: rgb(152,15,0); } /* при нажатии */
-  
-  /*test new input 
+  .img {
+    width: 100%;
+  }
+  .flex {
+    display: flex;
+
+    background: #dbd9d9;
+    padding: 5px;
+    flex-wrap: wrap;
+  }
+  .inputform {
+    flex-basis: 22%;
+  }
+  .fieldset {
+    margin-top: px;
+  }
+  .flex-itm {
+    background: #ffffff;
+    flex: 0.5 0.5; /* or 1 0 100px, and no more need in min-width at all */
+    flex-basis: 22%;
+    margin: 5px;
+    padding: 15px;
+  }
+}
+
+.img {
+  pointer-events: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* крестик */
+.close {
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  width: 32px;
+  height: 32px;
+  z-index: 3;
+  color: red;
+  font-size: 20pt;
+  opacity: 0;
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+}
+.preloader {
+  opacity: 0;
+  position: absolute;
+  z-index: 2;
+  margin-left: 43%;
+  top: 40%;
+}
+.close.click {
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #3498db;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* target */
+.flex-itm {
+  position: relative;
+  overflow: hidden;
+}
+
+.flex-itm {
+  margin-bottom: 30px;
+}
+
+.dop_info {
+  z-index: 2;
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 13pt;
+  line-height: 18px;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+}
+span:focus ~ .preloader {
+  opacity: 1;
+}
+.dop_info,
+.preloader,
+.flex-itm:after,
+.flex-itm.active:after {
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: absolute;
+  z-index: 2;
+}
+
+.flex-itm:hover:after,
+.flex-itm.active:after {
+  content: " ";
+  top: 0;
+  background: #000;
+  opacity: 0.6;
+}
+
+.flex-itm:hover .dop_info,
+.flex-itm.active .dop_info,
+.flex-itm.active .close,
+.flex-itm:hover .close {
+  opacity: 1;
+  -webkit-transform: none;
+  transform: none;
+  -webkit-transition: 200ms ease-in-out;
+  transition: 200ms ease-in-out;
+}
+
+/* show more button */
+.show_more {
+  text-align: center;
+  margin-left: 45%;
+  color: #fff; /* цвет текста */
+  text-decoration: none; /* убирать подчёркивание у ссылок */
+  user-select: none; /* убирать выделение текста */
+  background: rgb(212, 75, 56); /* фон кнопки */
+  padding: 0.7em 1.5em; /* отступ от текста */
+  outline: none; /* убирать контур в Mozilla */
+}
+.show_more:hover {
+  background: rgb(232, 95, 76);
+} /* при наведении курсора мышки */
+.show_more:active {
+  background: rgb(152, 15, 0);
+} /* при нажатии */
+
+/* input form */
+input {
+  margin-bottom: 5px;
+  height: 20px;
+  border: 1px solid #d8d8d8;
+  padding: 3px;
+}
+
+textarea {
+  border: 1px solid #d8d8d8;
+  padding: 3px;
+}
+
+button {
+  padding: 10px;
+  border: 1px solid #d8d8d8;
+  background-color: #f9f9f9;
+  border-radius: 3px;
+  font-weight: 300;
+}
+
+.error {
+  margin-left: 5px;
+  font-size: 13px;
+  color: red;
+  font-weight: 600;
+}
+.gray {
+  background-color: #eee;
+}
+.inputform {
+  margin-top: 5%;
+  z-index: 10;
+}
+.dropdown1 {
+  z-index: 500;
+}
+.inputbtn {
+  text-align: center;
+  margin-left: 37%;
+  padding: 5px 5px 5px 5px;
+  color: #fff; /* цвет текста */
+  text-decoration: none; /* убирать подчёркивание у ссылок */
+  user-select: none; /* убирать выделение текста */
+  background: rgb(212, 75, 56); /* фон кнопки */
+  padding: 0.7em 1.5em; /* отступ от текста */
+  outline: none; /* убирать контур в Mozilla */
+}
+.inputbtn:hover {
+  background: rgb(232, 95, 76);
+} /* при наведении курсора мышки */
+.inputbtn:active {
+  background: rgb(152, 15, 0);
+} /* при нажатии */
+
+/*test new input 
   form {
     max-width: 450px;
     margin: 0 auto;
@@ -399,8 +418,8 @@
 */
 .requirements {
   position: absolute;
-  top:30%;
-  left:30%;
-  color:red;
-  font-weight:600;
-} 
+  top: 19%;
+  left: 11%;
+  color: red;
+  font-weight: 600;
+}
