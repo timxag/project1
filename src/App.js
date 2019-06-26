@@ -3,7 +3,10 @@ import Card from './card'
 import InfiniteScroll from "react-infinite-scroll-component";
 import Form from './form'
 import _ from 'lodash';
+import { Container, Draggable } from 'react-smooth-dnd';
+
 const API = 'https://jsonplaceholder.typicode.com/photos';
+
 var count = 19;
 var titles = [];
 export default class App extends React.Component {
@@ -108,12 +111,10 @@ export default class App extends React.Component {
           scrollThreshold="80%"
           loader={<img src="https://images.gr-assets.com/hostedimages/1414861120ra/11699799.gif" width="50px" className="preloader" />}
         >
-
           <div className="flex">
             <Form
               arr={titles} onSubmit={this.handleSubmit}
             />
-
             {
               hit.map(hit =>
                 (<Card

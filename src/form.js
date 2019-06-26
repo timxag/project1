@@ -69,6 +69,9 @@ export default class Form extends React.Component {
             this.props.onSubmit(this.state.link, this.state.title)
         }
     }
+    autoComplete(Arr, Input) {
+        return Arr.filter(e => e.toLowerCase().includes(Input.toLowerCase()));
+    }
     render() {
 
         return (

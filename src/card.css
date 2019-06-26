@@ -107,7 +107,7 @@
     }
     .flex-itm {
       background: #ffffff;
-      flex: 0 0.5; /* or 1 0 100px, and no more need in min-width at all */
+      flex: 0.5 0.5; /* or 1 0 100px, and no more need in min-width at all */
       flex-basis: 22%;
       margin: 5px;
       padding: 15px;
