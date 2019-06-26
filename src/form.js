@@ -84,15 +84,24 @@ export default class Form extends React.Component {
   show() {
     this.linkRef.current.classList.remove("dropdown_hid");
     this.linkRef.current.classList.add("dropdown1");
+    this.linkRef.opened = true;
     console.log("show: ", this.linkRef);
   } //
   hide() {
     this.linkRef.current.classList.remove("dropdown1");
     this.linkRef.current.classList.add("dropdown_hid");
+    this.linkRef.opened = false;
     console.log("hide:", this.linkRef);
   }
   linkChange(url) {
     this.setState({ link: url });
+    this.hide();
+  }
+  componentDidMount() {
+    window.addEventListener("click", this.linkRef.opened && this.hide());
+  }
+  componentWillUnmount() {
+    window.deleteEventListener("click", this.linkRef.opened && this.hide());
   }
   render() {
     //console.log(this.linkRef);
@@ -103,7 +112,7 @@ export default class Form extends React.Component {
           <div className="requirements">
             <FormErrors formErrors={this.state.formErrors} />
           </div>
-          <div class="__inputWrapper">
+          <div class="__inputWrapper" onClick={e => e.stopPropagation()}>
             <label htmlFor="link">Image URL</label>
             <input
               id="form"
@@ -112,15 +121,14 @@ export default class Form extends React.Component {
               autocomplete="off"
               style={{ borderColor: linkColor }}
               onFocus={this.show}
-              onBlur={this.hide}
               name="link"
               value={this.state.link}
               onChange={this.handleUserInput}
             />
             <br />
-            <ul className="dropdown_hid" ref={this.linkRef}>
+            <ul className="dropdown_hid" ref={this.linkRef} tabindex="0">
               {this.state.data.map(url => (
-                <li tabIndex={counter++} onClick={this.handleUserInput}>
+                <li tabIndex={counter++} onClick={() => this.linkChange(url)}>
                   {url}
                 </li>
               ))}

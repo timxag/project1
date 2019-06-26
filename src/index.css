@@ -241,18 +241,20 @@ button{
 
 */
 .dropdown1 {
-  top: 20%;
+  top: 24%;
   display: block;
   background: white;
   position: absolute;
+  width: 300px;
 }
 
 .dropdown_hid {
-  top: 20%;
+  top: 24%;
   display: none;
   background: white;
   position: absolute;
 }
+
 li {
   list-style-type: none;
   margin-left: -30px;
