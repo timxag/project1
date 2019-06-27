@@ -3,6 +3,7 @@ import Card from "./card";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Form from "./form";
 import _ from "lodash";
+
 import { Container, Draggable } from "react-smooth-dnd";
 
 const API = "https://jsonplaceholder.typicode.com/photos";
@@ -89,7 +90,6 @@ export default class App extends React.Component {
     for (var key in hit) {
       titles[key] = hit[key].url;
     }
-    titles = titles.slice(0, 10);
     return (
       <>
         <InfiniteScroll

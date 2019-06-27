@@ -1,10 +1,10 @@
 import React from "react";
 import "./index.css";
-import { FormErrors } from "./FormErrors";
+import FormErrors from "./FormErrors";
 
 var linkColor;
 var titleColor;
-var counter = 1;
+var counter = -1;
 
 export default class Form extends React.Component {
   constructor(props) {
@@ -15,6 +15,7 @@ export default class Form extends React.Component {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
     this.onWindowClick = this.onWindowClick.bind(this);
+    this.handleUserInput = this.handleUserInput.bind(this);
     this.state = {
       link: "",
       title: "",
@@ -28,12 +29,12 @@ export default class Form extends React.Component {
   autoComplete(Arr, Input) {
     return Arr.filter(e => e.includes(Input));
   }
-  handleUserInput = ({ target: { name, value } }) => {
+  handleUserInput({ target: { name, value } }) {
     this.validateField(name, value);
     let newData = this.autoComplete(this.props.arr, value);
     this.setState({ data: newData, [name]: value });
-    console.log({ newData });
-  };
+    // console.log({ newData });
+  }
 
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.formErrors;
@@ -57,8 +58,6 @@ export default class Form extends React.Component {
       default:
         break;
     }
-    console.log(linkValid);
-
     this.setState(
       {
         formErrors: fieldValidationErrors,
@@ -80,24 +79,37 @@ export default class Form extends React.Component {
     e.preventDefault();
     {
       this.props.onSubmit(this.state.link, this.state.title);
+      this.setState({ link: "", title: "" });
     }
   }
   show() {
     this.linkRef.current.classList.remove("dropdown_hid");
     this.linkRef.current.classList.add("dropdown1");
-    console.log("show: ", this.linkRef);
+    // console.log("show: ", this.linkRef);
   } //
   hide() {
     this.linkRef.current.classList.remove("dropdown1");
     this.linkRef.current.classList.add("dropdown_hid");
-    console.log("hide:", this.linkRef);
+    console.log(this.state.link);
+    console.log(this.state.title);
+
+    this.validateField(this.state.link, this.state.title);
+
+    // console.log("hide:", this.linkRef);
+    counter = -1;
   }
   linkChange(url) {
-    this.setState({ link: url });
+    // this.setState({ link: url });
+    this.handleUserInput({
+      target: {
+        name: "link",
+        value: url
+      }
+    });
     this.hide();
   }
   onWindowClick() {
-    console.log({ linkRef: this.linkRef });
+    // console.log({ linkRef: this.linkRef });
     var checkClass = this.linkRef.current.classList.contains("dropdown1");
     if (checkClass) this.hide();
   }
@@ -105,55 +117,73 @@ export default class Form extends React.Component {
     window.addEventListener("click", this.onWindowClick);
   }
   componentWillUnmount() {
-    var checkClass = this.linkRef.current.classList.contains("dropdown1");
     window.removeEventListener("click", this.onWindowClick);
   }
+  handleKeyPress = event => {
+    if (event.key === "Enter") {
+      this.setState({ link: this.state.data[counter] });
+      this.handleUserInput({
+        target: {
+          name: "link",
+          value: this.state.data[counter]
+        }
+      });
+      var checkClass = this.linkRef.current.classList.contains("dropdown1");
+      if (checkClass) this.hide();
+    }
+    if (event.key === "Tab") {
+      counter++;
+    }
+  };
   render() {
-    //console.log(this.linkRef);
-
+    console.log("after: ", this.state.link);
+    console.log("after: ", this.state.title);
     return (
       <>
         <form className="inputform" onSubmit={this.handleSubmit.bind(this)}>
-          <div className="requirements">
-            <FormErrors formErrors={this.state.formErrors} />
-          </div>
-          <div class="__inputWrapper" onClick={e => e.stopPropagation()}>
+          <div
+            className="__inputWrapper"
+            onKeyDown={this.handleKeyPress.bind(this)}
+            onClick={e => e.stopPropagation()}
+          >
             <label htmlFor="link">Image URL</label>
             <input
-              id="form"
               type="link"
               className="form-control"
-              autocomplete="off"
+              autoComplete="off"
               style={{ borderColor: linkColor }}
               onFocus={this.show}
               name="link"
               value={this.state.link}
               onChange={this.handleUserInput}
             />
+            <div className="requirements">
+              <FormErrors formErrors={this.state.formErrors} type="link" />
+            </div>
             <br />
-            <ul className="dropdown_hid" ref={this.linkRef} tabindex="0">
+            <ul className="dropdown_hid" ref={this.linkRef}>
               {this.state.data.map(url => (
-                <li tabIndex={counter++} onClick={() => this.linkChange(url)}>
+                <li key={url} tabIndex="0" onClick={() => this.linkChange(url)}>
                   {url}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div
-            className={`form-group
-                 ${this.errorClass(this.state.formErrors.title)}`}
-          >
+          <div>
             <label htmlFor="title">Description</label>
             <input
               type="title"
               className="form-control"
-              autocomplete="off"
+              autoComplete="off"
               style={{ borderColor: titleColor }}
               name="title"
               value={this.state.title}
               onChange={this.handleUserInput}
             />
+            <div className="requirements">
+              <FormErrors formErrors={this.state.formErrors} type="title" />
+            </div>
           </div>
           <button
             type="submit"
