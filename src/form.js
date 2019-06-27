@@ -14,6 +14,7 @@ export default class Form extends React.Component {
     this.linkRef = React.createRef();
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
+    this.onWindowClick = this.onWindowClick.bind(this);
     this.state = {
       link: "",
       title: "",
@@ -84,24 +85,28 @@ export default class Form extends React.Component {
   show() {
     this.linkRef.current.classList.remove("dropdown_hid");
     this.linkRef.current.classList.add("dropdown1");
-    this.linkRef.opened = true;
     console.log("show: ", this.linkRef);
   } //
   hide() {
     this.linkRef.current.classList.remove("dropdown1");
     this.linkRef.current.classList.add("dropdown_hid");
-    this.linkRef.opened = false;
     console.log("hide:", this.linkRef);
   }
   linkChange(url) {
     this.setState({ link: url });
     this.hide();
   }
+  onWindowClick() {
+    console.log({ linkRef: this.linkRef });
+    var checkClass = this.linkRef.current.classList.contains("dropdown1");
+    if (checkClass) this.hide();
+  }
   componentDidMount() {
-    window.addEventListener("click", this.linkRef.opened && this.hide());
+    window.addEventListener("click", this.onWindowClick);
   }
   componentWillUnmount() {
-    window.deleteEventListener("click", this.linkRef.opened && this.hide());
+    var checkClass = this.linkRef.current.classList.contains("dropdown1");
+    window.removeEventListener("click", this.onWindowClick);
   }
   render() {
     //console.log(this.linkRef);

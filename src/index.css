@@ -241,7 +241,7 @@ button{
 
 */
 .dropdown1 {
-  top: 24%;
+  top: 22%;
   display: block;
   background: white;
   position: absolute;
@@ -249,7 +249,7 @@ button{
 }
 
 .dropdown_hid {
-  top: 24%;
+  top: 22%;
   display: none;
   background: white;
   position: absolute;
