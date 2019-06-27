@@ -5,15 +5,10 @@ export default class FormErrors extends React.Component {
   }
   render() {
     return (
-      <div className="formErrors">
+      <div className="requirements">
         <p>
-          {this.props.formErrors[this.props.type].length > 0
-            ? this.props.type
-            : ""}
-          {""}
-          {this.props.formErrors[this.props.type].length > 0
-            ? this.props.formErrors[this.props.type]
-            : ""}
+          {this.props.error.length > 0 ? this.props.type : ""}
+          {this.props.error.length > 0 ? this.props.error : ""}
         </p>
       </div>
     );
