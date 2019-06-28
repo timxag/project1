@@ -1,17 +1,13 @@
 import React from "react";
 import "./index.css";
-import FormErrors from "./FormErrors";
-var linkColor;
-var Color;
 export default class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: ""
-    };
+    this.linkRef = React.createRef();
+    this.onWindowClick = this.onWindowClick.bind(this);
   }
   onWindowClick() {
-    // console.log({ linkRef: this.linkRef });
+    console.log({ linkRef: this.linkRef });
     var checkClass = this.linkRef.current.classList.contains("dropdown1");
     if (checkClass) this.hide();
   }
@@ -39,19 +35,22 @@ export default class Form extends React.Component {
   show() {
     this.linkRef.current.classList.remove("dropdown_hid");
     this.linkRef.current.classList.add("dropdown1");
-    // console.log("show: ", this.linkRef);
   } //
   hide() {
     this.linkRef.current.classList.remove("dropdown1");
     this.linkRef.current.classList.add("dropdown_hid");
-    console.log(this.state.link);
-    console.log(this.state.title);
-
-    this.validateField(this.state.link, this.state.title);
-
-    // console.log("hide:", this.linkRef);
   }
   render() {
-    return <></>;
+    return (
+      <>
+        <ul className="dropdown1" ref={this.linkRef}>
+          {this.props.Data.map(url => (
+            <li key={url} tabIndex="0" onClick={() => this.linkChange(url)}>
+              {url}
+            </li>
+          ))}
+        </ul>
+      </>
+    );
   }
 }

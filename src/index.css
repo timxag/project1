@@ -245,6 +245,7 @@ button{
   background: white;
   position: absolute;
   width: 300px;
+  word-wrap: break-all;
 }
 
 .dropdown_hid {

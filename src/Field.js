@@ -8,16 +8,12 @@ export default class Form extends React.Component {
     super(props);
 
     this.state = {
-      error: ""
+      error: "",
+      Data: [this.props.dropdown]
     };
-
     this.validateField = this.validateField.bind(this);
     this.autoComplete = this.autoComplete.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
-  }
-
-  autoComplete(userInput) {
-    return this.props.dropdown.filter(e => e.includes(userInput));
   }
 
   validateField(userInput) {
@@ -54,7 +50,7 @@ export default class Form extends React.Component {
     this.props.onChange(event, isValid);
 
     if (this.props.dropdown) {
-      this.autoComplete(userInput);
+      this.autoComplete.bind(userInput);
     }
   }
 
@@ -68,7 +64,10 @@ export default class Form extends React.Component {
     });
     this.hide();
   }
-
+  autoComplete(userInput) {
+    console.log("ac");
+    return this.state.Data.filter(e => e.includes(userInput));
+  }
   render() {
     return (
       <div>
@@ -83,6 +82,11 @@ export default class Form extends React.Component {
             value={this.props.value}
             onChange={this.handleUserInput}
           />
+          {this.props.type === "url" ? (
+            <DropDown Data={this.props.dropdown} userInput={this.props.value} />
+          ) : (
+            ""
+          )}
           <FormErrors error={this.state.error} type={this.props.type} />
         </div>
       </div>

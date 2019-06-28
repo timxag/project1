@@ -28,7 +28,7 @@ export default class App extends React.Component {
       method: "DELETE"
     })
       .then(() => {
-        this.count--;
+        count--;
         this.setState(prevState => ({
           hit: prevState.hit.filter(hit => hit.id != id)
         }));
