@@ -2,9 +2,6 @@ import React from "react";
 import "./index.css";
 import FormErrors from "./FormErrors";
 import Field from "./Field";
-var linkColor;
-var titleColor;
-var counter = -1;
 
 export default class Form extends React.Component {
   constructor(props) {
@@ -26,8 +23,8 @@ export default class Form extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state.link.value);
-    console.log(this.state.title.value);
+    // console.log(this.state.link.value);
+    // console.log(this.state.title.value);
     this.props.onSubmit(this.state.link.value, this.state.title.value);
     this.setState({
       link: { value: "", valid: false },

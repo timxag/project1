@@ -2,18 +2,21 @@ import React from "react";
 import "./index.css";
 import FormErrors from "./FormErrors";
 import DropDown from "./DropDown";
-var Color;
 export default class Form extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       error: "",
-      Data: [this.props.dropdown]
+      Data: [this.props.dropdown],
+      isOpen: false
     };
     this.validateField = this.validateField.bind(this);
     this.autoComplete = this.autoComplete.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
+    this.onWindowClick = this.onWindowClick.bind(this);
+    this.inputOpen = this.inputOpen.bind(this);
+    this.inputClose = this.inputClose.bind(this);
   }
 
   validateField(userInput) {
@@ -43,7 +46,7 @@ export default class Form extends React.Component {
     return isValid;
   }
 
-  handleUserInput(event) {
+  handleUserInput(event, clickable) {
     const userInput = event.target.value;
     const isValid = this.validateField(userInput);
 
@@ -52,25 +55,31 @@ export default class Form extends React.Component {
     if (this.props.dropdown) {
       this.autoComplete.bind(userInput);
     }
+    if (clickable) {
+      this.setState({ isOpen: false });
+    }
   }
-
-  linkChange(url) {
-    // this.setState({ link: url });
-    this.handleUserInput({
-      target: {
-        name: "link",
-        value: url
-      }
-    });
-    this.hide();
+  onWindowClick() {
+    this.setState({ isOpen: false });
+  }
+  componentDidMount() {
+    window.addEventListener("click", this.onWindowClick);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("click", this.onWindowClick);
   }
   autoComplete(userInput) {
-    console.log("ac");
     return this.state.Data.filter(e => e.includes(userInput));
+  }
+  inputOpen() {
+    this.setState({ isOpen: true });
+  }
+  inputClose() {
+    this.setState({ isOpen: false });
   }
   render() {
     return (
-      <div>
+      <div onClick={e => e.stopPropagation()}>
         <p>{this.props.label}</p>
         <div>
           <input
@@ -78,12 +87,18 @@ export default class Form extends React.Component {
             type={this.props.type}
             className="form-control"
             autoComplete={this.props.dropdown && "off"}
+            onFocus={this.inputOpen}
             style={{ borderColor: this.props.valid ? "green" : "red" }}
             value={this.props.value}
             onChange={this.handleUserInput}
           />
           {this.props.type === "url" ? (
-            <DropDown Data={this.props.dropdown} userInput={this.props.value} />
+            <DropDown
+              Data={this.props.dropdown}
+              userInput={this.props.value}
+              isOpen={this.state.isOpen}
+              Change={this.handleUserInput}
+            />
           ) : (
             ""
           )}

@@ -159,7 +159,7 @@
   left: 0;
   z-index: 2;
 }
-
+/*
 .flex-itm:hover:after,
 .flex-itm.active:after {
   content: " ";
@@ -240,7 +240,7 @@ button{
 
 */
 .dropdown1 {
-  top: 22%;
+  top: 24%;
   display: block;
   background: white;
   position: absolute;
@@ -249,7 +249,7 @@ button{
 }
 
 .dropdown_hid {
-  top: 22%;
+  top: 24%;
   display: none;
   background: white;
   position: absolute;

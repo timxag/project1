@@ -10,7 +10,7 @@ export default class Card extends React.Component {
         <img src={this.props.url} width="100%" />
         <span tabIndex="0">
           <div
-            key={this.props.id}
+            key={this.props.url + this.props.title}
             className="close"
             onClick={this.props.onDelete}
           >

@@ -214,7 +214,7 @@ span:focus ~ .preloader {
   transition: 200ms ease-in-out;
 }
 
-/* show more button */
+/*show more button */
 .show_more {
   text-align: center;
   margin-left: 45%;
