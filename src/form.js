@@ -1,101 +1,73 @@
-import React from 'react';
-import './index.css'
+import React from "react";
+import "./index.css";
+import FormErrors from "./FormErrors";
+import Field from "./Field";
+
 export default class Form extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleValidation = this.handleValidation.bind(this);
-        this.state = {
-            fields: {},
-            errors: {},
-        }
-    }
-    handleValidation() {
-        let fields = this.state.fields;
-        let errors = {};
-        let formIsValid = true;
-        if (!fields["text"]) {
-            formIsValid = false;
-            errors["text"] = "Cannot be empty";
-        }
-        if (typeof fields["text"] !== "undefined") {
-            if (!fields["text"].match(/^[a-zA-Zа-яА-Я0-9]+$/)) {
-                formIsValid = false;
-                errors["text"] = "Only letters and numbers";
-            }
-        }
-        if (!fields["link"]) {
-            formIsValid = false;
-            errors["link"] = "Cannot be empty";
-        }
+  constructor(props) {
+    super(props);
 
-        if (typeof fields["link"] !== "undefined") {
-            let lastAtPos = fields["link"].lastIndexOf('/');
-            let lastDotPos = fields["link"].lastIndexOf('.');
+    this.onChange = this.onChange.bind(this);
 
-            if (!(lastAtPos > 0 && fields["link"].indexOf('///') == -1 && lastDotPos > 2 && (fields["link"].length - lastDotPos) > 2)) {
-                formIsValid = false;
-                errors["link"] = "Link is not valid";
-            }
-        }
-        this.setState({ errors: errors });
-        return formIsValid;
-    }
-    handleChange(field, e) {
-        let fields = this.state.fields;
-        fields[field] = e.target.value;
-        this.setState({ fields });
-    }
-    handleSubmit(e) {
-        e.preventDefault();
-        if (this.handleValidation()) {
-            this.props.onSubmit(this.state.fields["link"], this.state.fields["text"])
-        }
-    }
-    render() {
-        const hit = this.props.arr;
-        console.log(hit);
-        return (
-            <form name="inputform" className="inputform" onSubmit={this.handleSubmit.bind(this)}>
-                <div className="gray">
+    this.state = {
+      link: {
+        value: "",
+        valid: false
+      },
+      title: {
+        value: "",
+        valid: false
+      }
+    };
+  }
 
-                    <input
-                        refs="link"
-                        type="link"
-                        size="30"
-                        id="link"
-                        autocomplete="off"
-                        required placeholder=" " pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$" required
-                        placeholder="Enter valid image URL"
-                        onChange={this.handleChange.bind(this, "link")}
-                        value={this.state.fields["link"]} />
-                    <div class="requirements">
-                        Invalid URL
-                         </div>
+  handleSubmit(e) {
+    e.preventDefault();
+    // console.log(this.state.link.value);
+    // console.log(this.state.title.value);
+    this.props.onSubmit(this.state.link.value, this.state.title.value);
+    this.setState({
+      link: { value: "", valid: false },
+      title: { value: "", valid: false }
+    });
+  }
 
-                    <input
-                        ref="text"
-                        type="text"
-                        autocomplete="off"
-                        size="30"
-                        required placeholder=" " pattern=".{3,}"
-                        //onBlur={this.costyl()}
-                        placeholder="Enter description for image"
-                        onChange={this.handleChange.bind(this, "text")}
-                        value={this.state.fields["text"]} />
-                    <div class="requirements2">
-                        Must contain at least 3 symbols
-                    </div>
-                    <button class="inputbtn" id="submit" value="Submit">Add</button>
+  onChange(event, valid) {
+    const { name, value } = event.target;
+    this.setState({ [name]: { value, valid } });
+  }
 
-                </div>
-                <datalist id="cc">
-                    {hit.map(
-                        arr => (
-                            <option value={arr}></option>
-                        )
-                    )}
-                </datalist>
-            </form >
-        )
-    }
+  render() {
+    return (
+      <div className="inputform">
+        <Field
+          label="Image url"
+          name="link"
+          type="url"
+          value={this.state.link.value}
+          valid={this.state.link.valid}
+          onChange={this.onChange}
+          dropdown={this.props.arr}
+        />
+
+        <Field
+          label="Image title"
+          name="title"
+          type="text"
+          value={this.state.title.value}
+          valid={this.state.title.valid}
+          onChange={this.onChange}
+        />
+
+        <button
+          type="submit"
+          className="btn btn-primary"
+          onClick={this.handleSubmit.bind(this)}
+          disabled={!(this.state.link.valid && this.state.title.valid)}
+        >
+          Add
+        </button>
+      </div>
+    );
+  }
 }
